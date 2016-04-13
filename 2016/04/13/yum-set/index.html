@@ -1,0 +1,515 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>说说yum源 | NanJi&#39;s blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
+    
+    <meta name="author" content="NanJi">
+    
+    <meta name="description" content="yum 是什么？
+
+维基百科 yum
+
+
+yum特点
+
+使用方便
+保持与RPM数据库一致性
+自动解决增加、删除RPM包时遇到的依赖性问题
+可配置多个源
+
+
+yum安装
+  rpm -Uvh yum-xxx-xx-xx.rpm
+
+yum 配置
+  yum配置文件yum.conf,通常位于/etc目录下">
+    
+    
+    
+    
+    <link rel="alternate" href="/atom.xml" title="NanJi&#39;s blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/pacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/pacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.svg" alt="NanJi&#39;s blog" title="NanJi&#39;s blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="NanJi&#39;s blog">NanJi&#39;s blog</a></h1>
+				<h2 class="blog-motto">Walk steps by step</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					
+						<li><a href="/">主页 | Home</a></li>
+					
+						<li><a href="/index">索引 | Index</a></li>
+					
+						<li><a href="/archives">归档 | Archives</a></li>
+					
+						<li><a href="/about">简介 | About</a></li>
+					
+					<li>
+					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:tyrlee.github.io">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/04/13/yum-set/" title="说说yum源" itemprop="url">说说yum源</a>
+  </h1>
+  <p class="article-author">By
+    
+      <a href="http://tyrlee.github.io" title="NanJi">NanJi</a>
+    </p>
+  <p class="article-time">
+    <time datetime="2016-04-13T09:14:54.227Z" itemprop="datePublished">2016-04-13</time>
+    更新日期:<time datetime="2016-04-13T09:14:54.549Z" itemprop="dateModified">2016-04-13</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		<ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#全局性配置"><span class="toc-number">1.</span> <span class="toc-text">全局性配置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服务器配置"><span class="toc-number"></span> <span class="toc-text">服务器配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常见问题"><span class="toc-number"></span> <span class="toc-text">常见问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装fastestmirror-让系统yum的时候自动选择最快镜像"><span class="toc-number"></span> <span class="toc-text">安装fastestmirror,让系统yum的时候自动选择最快镜像</span></a>
+		</div>
+		
+		<ul>
+<li><p>yum 是什么？</p>
+<blockquote>
+<p>维基百科 <a href="https://zh.wikipedia.org/wiki/Yellowdog_Updater,_Modified" title="yum" target="_blank" rel="external">yum</a></p>
+</blockquote>
+</li>
+<li><p>yum特点</p>
+<ol>
+<li>使用方便</li>
+<li>保持与RPM数据库一致性</li>
+<li>自动解决增加、删除RPM包时遇到的依赖性问题</li>
+<li>可配置多个源</li>
+</ol>
+</li>
+<li><p>yum安装</p>
+<p>  <code>rpm -Uvh yum-xxx-xx-xx.rpm</code></p>
+</li>
+<li><p>yum 配置</p>
+<p>  yum配置文件yum.conf,通常位于/etc目录下，yum.conf如下图：</p>
+</li>
+</ul>
+<p><img src="http://imageshack.com/a/img921/4971/TVHXX0.jpg" alt="yumset"><br><img src="http://imageshack.com/a/img923/2839/M5WUso.jpg" alt="yumcset"><br>    yum配置文件分为2个部分</p>
+<pre><code>- 全局性设置
+- 服务器配置
+</code></pre><h4 id="全局性配置"><a href="#全局性配置" class="headerlink" title="全局性配置"></a>全局性配置</h4><pre><code>[main]
+cachedir: yum缓存目录，yum在此存储下载RPM包和数据库。
+debuglevel: 除错级别，0-10，默认2
+logfile： yum的日志文件，默认是/var/log/yum.log
+pkgpolicy: 包的策略，一共两个选项，newest和last,这个作用是如果你设置了多个repository,而同一软件在不同的repository中同时存在，yum应该安装哪一个？如果是newest，则yum会安装最新的那个版本。如果是last，则yum会将服务器id以字母表排序，并选择最后的那个服务器上的软件安装，一般都是选newest。
+distroverpkg: 指定一个软件包，yum会根据这个包判断的发行版本，默认是redhat-release,也可以是安装的任何针对自己发行版的rpm包。
+exactarch: 有2个选项1和0，代表是否只升级和安装软件包CPU体系一致的包，如果为1，则如你安装了一个i386的rpm，则yum不会用i686的包来升级。
+retries: 也有1和0两个选项，表示yum是否容忍命令行发生与软件包有关的错误，比如你要安装1，2,3三个包，而其中此前已经安装了，如果你设为1，则yum不会出现错误信息，默认是0.
+
+**出上述以外，还有一些可自行添加的选项**
+
+exclude: 排除某些软件在升级名单之外，可以用通配符，列表中各个项目要用空格隔开，这个对于安装了诸如美化包，中文补丁的朋友别用
+gpgcheck: 有1和0两个选择，分别代表是否进行gpg校验，如果没有这一项，默认好像也是检查的。
+</code></pre><h3 id="服务器配置"><a href="#服务器配置" class="headerlink" title="服务器配置"></a>服务器配置</h3><pre><code>所有服务器遵循以下格式：
+1.[serverid]
+2.name=Some name for this server
+3.baseurl=url://path/to/repository/
+
+其中serverid是用于区别各个不同的repository，必须有一个独一无二的名称。
+name，是对repository的描述，支持像$release $basearch这样的变量。
+baseurl是服务器设置中最重要的部分，只有设置正确，才能从上面获取软件。格式如下：
+
+1.baseurl=url://server1/path/to/repository/
+2.url://server2/path/to/repository/
+3.url://server3/path/to/repository/
+
+其中url支持的协议有http、ftp、file三种，baseurl后可以跟多个url，你可以自己改为速度比较快的镜像站，但baseurl只能有一个，不能像如下格式：
+1.baseurl=url://server1/path/to/repository/
+2.baseurl=url://server2/path/to/repository/
+3.baseurl=url://server3/path/to/repository/
+
+其中url指向的目录必须是这个repository header目录的上一级，它也支持$releasever、$basearch这样的变量。url之后可以加上多个选项，如：gpgcheck、exclude、failovermethod等，如：
+
+1.[updates-released]
+2.name=Fedora Core $releaserver - $basearch - Released Updates
+3.baseurl=http://download.atrpms.net/mirrors/fedoracore/updates/$releaserver/$basearch
+4.http://redhat.linux.ee/pub/fedora/linux/core/updates/$releaserver/$basearch
+5.http://fr2.rpmfind.net/linux/fedora/core/updates/$releasever/$basearch
+6.gpgcheck=1
+7.exclude=gaim
+8.failovermethod=priority
+
+其中gpgcheck,exclude的含义和[main]部分相同，但只对此服务起作用，failovermethod有两个选项roundrobin和priority，意思分别是有多个url可供选择时，yum选择的次序，roundrobin是随机选择，如果连接失败则使用下一个，一次循环，priority则根据url的次序从第一个开始，如果不指明，默认roundrobin。
+
+几个变量
+$releasever:发行版的版本，从[main]部分的distroverpkg获取，如果没有，则根据redhat-release包进行判断。
+$arch:cpu体系，如i686,athlon等。
+$basearch:cpu基本体系组，如有i686和athlon同属i386，alpha和alphaev6同属alpha。
+
+对yum.conf设定完成，我们就可以好好体验yum带来的方便
+
+
+yum使用
+第一次使用yum或yum资源库更新时，yum会自动下载所有所需的headers放置于/var/cache/yum目录下，所需时间可能较长。
+
+系统更新（更新所有可以升级rpm包，包括kernel）
+# yum -y update
+
+每天定期执行系统更新
+# chkconfig yum on
+# service yum start
+
+rpm包更新，检查可更新的rpm包
+# yum check-update
+
+更新所有的rpm包
+# yum update
+
+更新指定的rpm包，如更新kernel source
+# yum update kernel kernel-source
+
+大规模的版本升级与yum update不同的是连旧的淘汰包也升级
+# yum upgrade
+
+rpm包的安装和删除
+安装 rpm包
+# yum install xxx.rpm
+
+删除rpm包，包括与该包邮依赖性的包
+# yum remove xxx
+
+yum暂存（/var/cache/yum）的相关参数
+清除暂存中的rpm包文件
+# yum clean packages
+
+清除暂存中的头文件
+# yum clean headers
+
+清除暂存中的rpm头文件和包文件
+# yum clean 或  # yum clean all
+
+rpm包列表
+列出资源库中所有可以安装或更新的rpm包
+# yum list
+
+列出资源库特定的可以安装或更新及已安装的rpm包
+# yum list mozilla
+# yun list mozilla*
+
+列出资源库中所有可以更新的rpm包
+# yum list updates
+
+列出已经安装的所有rpm包
+# yum list installed
+
+列出已安装的但是不包含在资源库中的rpm包
+# yum list extras
+
+列出资源库中所有可以安装或更新的rpm包的信息
+# yum info
+
+列出资源库中特定的可以安装或更新以及已经安装的rpm包的信息
+# yum info mozilla
+# yum info mozilla*
+
+列出资源库中所有可以更新的rpm包的信息
+# yum info updates
+
+列出已经安装的所有的rpm包信息
+# yum info installed
+
+列出已经安装的但是不包含在资源库中的rpm包信息
+# yum info extras
+
+搜索rpm包
+# yum search mozilla
+
+搜索有包含特定文件名的rpm包
+# yum provides realplay
+</code></pre><h3 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h3><p>1、如果网速慢的话可以通过增加yum的超时时间，这样就不会总是因为超时而退出。</p>
+<pre><code># vi /etc/yum.conf 增加 timeout=120
+</code></pre><p>2、yum Existing lock错误解决</p>
+<pre><code>如果系统启动的时候出现：Existing lock /var/run/yum.pid: another copy is running as pid 3380.Aborting.解决方法如下:
+1. etc/init.d/yum-updatesd stop
+2. # rm -f /var/run/yum.pid
+主要原因就是yum在自动更新，只要关掉它就可以了
+</code></pre><h3 id="安装fastestmirror-让系统yum的时候自动选择最快镜像"><a href="#安装fastestmirror-让系统yum的时候自动选择最快镜像" class="headerlink" title="安装fastestmirror,让系统yum的时候自动选择最快镜像"></a>安装fastestmirror,让系统yum的时候自动选择最快镜像</h3><pre><code># yum install yum-fastestmirror -y
+</code></pre>  
+	</div>
+		<footer class="article-footer clearfix">
+
+
+
+
+<div class="article-share" id="share">
+
+  <div data-url="http://tyrlee.github.io/2016/04/13/yum-set/" data-title="说说yum源 | NanJi&#39;s blog" data-tsina="null" class="share clearfix">
+  </div>
+
+</div>
+</footer>   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2016/04/12/centos-yum-repo/"  title="常用的Centos yum源">
+ <strong>NEXT:</strong><br/> 
+ <span>常用的Centos yum源
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section class="comment">
+	<div class="ds-thread"></div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+  <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#全局性配置"><span class="toc-number">1.</span> <span class="toc-text">全局性配置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#服务器配置"><span class="toc-number"></span> <span class="toc-text">服务器配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#常见问题"><span class="toc-number"></span> <span class="toc-text">常见问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#安装fastestmirror-让系统yum的时候自动选择最快镜像"><span class="toc-number"></span> <span class="toc-text">安装fastestmirror,让系统yum的时候自动选择最快镜像</span></a>
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+
+  
+  <div class="archiveslist">
+    <p class="asidetitle"><a href="/archives">归档</a></p>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a><span class="archive-list-count">6</span></li></ul>
+  </div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+      <li><a href="https://program-think.blogspot.com/" target="_blank" title="program-think">编程随想</a></li>
+      <li><a href="http://hexo.io" target="_blank" title="Hexo">Hexo</a></li>
+    </ul>
+</div>
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<div class="social-font clearfix">
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/A-limon/pacman" target="_blank" title="Pacman">Pacman</a> © 2016 
+		
+		<a href="http://tyrlee.github.io" target="_blank" title="NanJi">NanJi</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.1.0.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#share"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="#textlogo" class="article-back-to-top" title="Top"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="QRcode"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="Weibo"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"NanJi"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+  </body>
+</html>
