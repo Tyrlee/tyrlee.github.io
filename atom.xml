@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://tyrlee.github.io/"/>
-  <updated>2016-04-13T10:04:18.754Z</updated>
+  <updated>2016-04-14T08:48:21.241Z</updated>
   <id>http://tyrlee.github.io/</id>
   
   <author>
@@ -14,6 +14,25 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Resume</title>
+    <link href="http://tyrlee.github.io/2016/04/14/Resume/"/>
+    <id>http://tyrlee.github.io/2016/04/14/Resume/</id>
+    <published>2016-04-14T08:48:21.241Z</published>
+    <updated>2016-04-14T08:48:21.241Z</updated>
+    
+    <content type="html">&lt;h3 id=&quot;李滔-zhongzilee-gmail-com&quot;&gt;&lt;a href=&quot;#李滔-zhongzilee-gmail-com&quot; class=&quot;headerlink&quot; title=&quot;李滔(zhongzilee@gmail.com)&quot;&gt;&lt;/a&gt;李滔(zhongzilee@gmail.com)&lt;/h3&gt;&lt;h3 id=&quot;个人信息&quot;&gt;&lt;a href=&quot;#个人信息&quot; class=&quot;headerlink&quot; title=&quot;个人信息&quot;&gt;&lt;/a&gt;个人信息&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;- 本科/湖南商学院/计算机科学与技术
+&lt;/code&gt;&lt;/pre&gt;</content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;李滔-zhongzilee-gmail-com&quot;&gt;&lt;a href=&quot;#李滔-zhongzilee-gmail-com&quot; class=&quot;headerlink&quot; title=&quot;李滔(zhongzilee@gmail.com)&quot;&gt;&lt;/a&gt;李滔(zhongzilee@gm
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>说说yum源</title>
