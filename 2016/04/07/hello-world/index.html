@@ -58,11 +58,11 @@
 					
 					<li>
 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<form class="search" action="/search/index.html" method="get" accept-charset="utf-8">
 						<label>Search</label>
-						<input type="text" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
-						<input type="hidden" name="q" value="site:tyrlee.github.io">
-					</form>
+						<input type="text" id="search" class="st-default-search-input" maxlength="20" placeholder="Search" />
+						</form>
+
 					
 					</li>
 				</ul>
@@ -205,6 +205,15 @@
 		<a href="http://tyrlee.github.io" target="_blank" title="NanJi">NanJi</a>
 		
 		</p>
+
+		<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+  
+  _st('install','XvRv-sYJmqxBKstAt7We','2.0.0');
+  
 </div>
 </footer>
     <script src="/js/jquery-2.1.0.min.js"></script>
@@ -353,6 +362,11 @@ $(document).ready(function(){
 </script>
 
 
+
+<div id="totop" style="position:fixed;bottom:150px;right:50px;cursor: pointer;">
+<a title="返回顶部"><img src="/img/scrollup.png" /></a>
+</div>
+<script src="/js/totop.js"></script>
 
   </body>
 </html>

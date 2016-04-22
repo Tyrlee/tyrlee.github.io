@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>tags | NanJi&#39;s blog</title>
+    <title>search | NanJi&#39;s blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=3, minimum-scale=1">
     
     <meta name="author" content="NanJi">
@@ -15,7 +15,7 @@
     
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="https://twitter.com/LtloveyTaolor" />
-    <meta name="twitter:title" content="tags | NanJi&#39;s blog" />
+    <meta name="twitter:title" content="search | NanJi&#39;s blog" />
       
     
     
@@ -71,17 +71,48 @@
 
       </header>
       <div id="container">
-          
-<div class="archive-title" >
-<h2 class="tag-icon">标签</h2>
+        
+<div  id="container" class="page">
+  <div id='st-results-container' class="st-search-container" style='width:80%'>正在加载搜索结果，请稍等。</div>
+  <style>.st-result-text {
+  background: #fafafa;
+  display: block;
+  border-left: 0.5em solid #ccc;
+  -webkit-transition: border-left 0.45s;
+  -moz-transition: border-left 0.45s;
+  -o-transition: border-left 0.45s;
+  -ms-transition: border-left 0.45s;
+  transition: border-left: 0.45s;
+  padding: 0.5em
+  }
+  @media only screen and (min-width: 768px){
+    .st-result-text{
+    padding: 1em;
+    }
+  }
+  .st-result-text: hover {
+    border-left: 0.5em solid #ea6753;
+  }
 
-</div>
-<div id="main" class="archive-part">
-<div class="all-list-box"></div>
-</div>
+  .st-result-text h3 a{
+    color: #2ca6cb;
+    line-height: 1.5;
+    font-size: 22px;
+  }
+  .st-snippet em {
+    font-weight: bold;
+    color: #ea6753;
+  }</style>
 
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+  
+  _st('install','XvRv-sYJmqxBKstAt7We','2.0.0');
 
-
+  
 
       </div>
       <script src="/js/jquery-2.1.0.min.js"></script>
@@ -132,24 +163,6 @@ $(document).ready(function(){
 
 
 
-
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var list    = $('.archive-title a'),
-      box     = $('.all-list-box'),
-      first   = $('.archive-title a:first-of-type');
-      box.load(first.attr('data-src').toString()+' #archive-page');
-      first.addClass('current');
-  list.each(function(){
-    $(this).click(function(){
-      var listSrc=$(this).attr('data-src').toString()+' #archive-page';
-      box.load(listSrc);
-      list.removeClass('current');
-      $(this).addClass('current');
-     });  
-    });
-  }); 
-</script>
 
 
 
